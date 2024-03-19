@@ -9,21 +9,22 @@
 </head>
 <body>
     <div class="wrapper">
-        <nav class="nav-bar">
-            <h1>ICON</h1>
+        <nav class="nav-bar" style="background-color: deeppink;">
+            <h1><a href="{% url 'posts:categories' %}">ICON</a></h1>
             <ul>
-                <li>
-                    Login
-                </li>
-                <li>
-                    Logout
-                </li>
-                <li>
-                    Profile
-                </li>
-                <li>
-                    Create post
-                </li>
+                
+                {% if user.is_authenticated %}
+                    <li>
+                        Logout
+                    </li>
+                    <li>
+                        Profile
+                    </li>
+                {% else %}
+                    <li>
+                        Login
+                    </li>
+                {% endif %}
             </ul>
         </nav>
         {% block content %}

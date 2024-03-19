@@ -1,0 +1,13 @@
+{% extends 'base_layout.html' %}
+
+
+{% block content %}
+    <h1>Post</h1>
+    <div class="post-detail">
+        <h2 class="post-detail-title">{{ post.title }}</h2>
+        <p class="post-detail-description">{{ post.body }}</p>
+        <p class="post-date">{{ post.date }}</p>
+        <p class="post-author">{{ post.author }}</p>
+    </div>
+{% endblock content %}
+    

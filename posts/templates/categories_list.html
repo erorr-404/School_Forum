@@ -6,7 +6,7 @@
     <div class="categories">
         {% for category in categories %}
             <div class="category">
-                <a href="">
+                <a href="{% url 'posts:posts_list' category=category.slug %}">
                     <h2 class="category-title">{{ category.title }}</h2>
                     <p class="category-description">{{ category.description }}</p>
                 </a>
