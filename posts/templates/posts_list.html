@@ -2,11 +2,12 @@
 
 
 {% block content %}
+    <p><a href="{% url 'posts:create' category=category %}">Create post</a></p>
     <h1>Posts list</h1>
     <div class="categories">
         {% for post in posts %}
             <div class="post">
-                <a href="">
+                <a href="{% url 'posts:show' category=category post=post.slug %}">
                     <h2 class="post-title">{{ post.title }}</h2>
                     <p class="post-description">{{ post.description }}</p>
                 </a>

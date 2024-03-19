@@ -9,5 +9,45 @@
         <p class="post-date">{{ post.date }}</p>
         <p class="post-author">{{ post.author }}</p>
     </div>
+    <div class="interactions">
+        <ul>
+            <li>
+                <a href="" id="like">Like LIKE NUMBER</a>
+            </li>
+            <li>
+                <a href="" id="dislike">Dislike DISLIKE NUMBER</a>
+            </li>
+        </ul>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#like").click(function() {
+                    $.ajax({
+                        type: 'POST',
+                        async: true,
+                        url: '/',
+                        data: "category={{ post.category.slug }}&post={{ post.slug }};",
+                        beforeSend: function(xhr) {
+                            var csrf_token = '{{ csrf_token }}'
+                            xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                        },
+                        // Remake it
+                        success: function(data) {
+                            var old_likes = $('#like').text();
+                            var new_text = Number(old_likes) + 1
+                        },
+                        dataType: 'json',
+                    });
+                });
+            });
+        </script>
+    </div>
+    <div class="post-comments">
+        <ul class="comments-list">
+            <li>
+                <p class="author">USER</p>
+                <p class="comment">COMMENT</p>
+            </li>
+        </ul>
+    </div>
 {% endblock content %}
     

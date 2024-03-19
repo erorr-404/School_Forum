@@ -5,3 +5,15 @@ body {
 .category {
     background-color: deeppink;
 }
+
+.post {
+    background-color: deeppink;
+}
+
+.interactions {
+    background-color: deeppink;
+}
+
+.post-comments {
+    color: blueviolet;
+}
