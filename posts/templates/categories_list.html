@@ -1,0 +1,17 @@
+{% extends 'base_layout.html' %}
+
+
+{% block content %}
+    <h1>Categories list</h1>
+    <div class="categories">
+        {% for category in categories %}
+            <div class="category">
+                <a href="">
+                    <h2 class="category-title">{{ category.title }}</h2>
+                    <p class="category-description">{{ category.description }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+    

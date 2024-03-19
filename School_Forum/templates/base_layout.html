@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    {% block title %} {% endblock title %}
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="nav-bar">
+            <h1>ICON</h1>
+            <ul>
+                <li>
+                    Login
+                </li>
+                <li>
+                    Logout
+                </li>
+                <li>
+                    Profile
+                </li>
+                <li>
+                    Create post
+                </li>
+            </ul>
+        </nav>
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
+</html>
