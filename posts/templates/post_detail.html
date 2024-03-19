@@ -12,10 +12,10 @@
     <div class="interactions">
         <ul>
             <li>
-                <a href="" id="like">Like LIKE NUMBER</a>
+                <a href="#" id="like">Like <var id="likes">{{ likes }}</var></a>
             </li>
             <li>
-                <a href="" id="dislike">Dislike DISLIKE NUMBER</a>
+                <a href="" id="dislike">Dislike <var id="dislikes">{{ dislikes }}</var></a>
             </li>
         </ul>
         <script type="text/javascript">
@@ -24,16 +24,40 @@
                     $.ajax({
                         type: 'POST',
                         async: true,
-                        url: '/',
-                        data: "category={{ post.category.slug }}&post={{ post.slug }};",
+                        url: '{{ post.slug }}/like/',
+                        data: '',
                         beforeSend: function(xhr) {
                             var csrf_token = '{{ csrf_token }}'
                             xhr.setRequestHeader('X-CSRFToken', csrf_token)
                         },
                         // Remake it
                         success: function(data) {
-                            var old_likes = $('#like').text();
-                            var new_text = Number(old_likes) + 1
+                            $('#likes').text(data.likes)
+                            $('#dislikes').text(data.dislikes)
+                            console.log(data)
+                        },
+                        dataType: 'json',
+                    });
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#dislike").click(function() {
+                    $.ajax({
+                        type: 'POST',
+                        async: true,
+                        url: '{{ post.slug }}/dislike/',
+                        data: '',
+                        beforeSend: function(xhr) {
+                            var csrf_token = '{{ csrf_token }}'
+                            xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                        },
+                        // Remake it
+                        success: function(data) {
+                            $('#dislikes').text(data.dislikes)
+                            $('#likes').text(data.likes)
+                            console.log(data)
                         },
                         dataType: 'json',
                     });
@@ -42,11 +66,17 @@
         </script>
     </div>
     <div class="post-comments">
+        <div class="create-comment">
+            
+        </div>
         <ul class="comments-list">
+            {% for comment in comments %}
             <li>
-                <p class="author">USER</p>
-                <p class="comment">COMMENT</p>
+                <p class="comment-author">{{ comment.user }}</p>
+                <p class="comment-text">{{ comment.text }}</p>
+                <p class="comment-date">{{ comment.date }}</p>
             </li>
+            {% endfor %}
         </ul>
     </div>
 {% endblock content %}

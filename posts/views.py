@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Category, Post
+from .models import Category, Post, PostLike, PostDisLike, Comment
 from . import forms
 
 
@@ -22,7 +22,11 @@ def post_list_view(request, category):
 
 def post_view(request, category, post):
     post = Post.objects.get(slug=post)
-    return render(request, 'post_detail.html', {'post':post})
+    return render(request, 'post_detail.html', {'post':post, 
+                                                'likes':len(PostLike.objects.filter(post=post)),
+                                                'dislikes':len(PostDisLike.objects.filter(post=post)),
+                                                'comments':Comment.objects.filter(post=post)
+                                                })
 
 
 @login_required(login_url='accounts:login')
@@ -43,20 +47,40 @@ def create_post(request, category):
 @login_required(login_url='accounts:login')
 def like_post(request, category, post):
     if is_ajax(request):
-        post.like()
-        post.save()
-        response = {'like-status': True}
-    else:
-        response = {'like-status': False}
-    return JsonResponse(response)
+        liked_post = Post.objects.get(slug=post)
+        user_this_post_likes = len(PostLike.objects.filter(post=liked_post, user=request.user))
+        user_this_post_dislikes = len(PostDisLike.objects.filter(post=liked_post, user=request.user))
+        if user_this_post_likes == 0:
+            like = PostLike(post=liked_post, user=request.user)
+            like.save()
+            like_status = True
+            if user_this_post_dislikes > 0:
+                PostDisLike.objects.filter(post=liked_post, user=request.user).delete()
+        else:
+            like_status = False
+    
+        response = {'likes':len(PostLike.objects.filter(post=liked_post)), 
+                    'dislikes':len(PostDisLike.objects.filter(post=liked_post)), 
+                    'like-status':like_status}
+        return JsonResponse(response)
 
 
 @login_required(login_url='accounts:login')
 def dislike_post(request, category, post):
     if is_ajax(request):
-        post.dislike()
-        post.save()
-        response = {'dislike-status': True}
-    else:
-        response = {'dislike-status': False}
-    return JsonResponse(response)
+        disliked_post = Post.objects.get(slug=post)
+        user_this_post_likes = len(PostLike.objects.filter(post=disliked_post, user=request.user))
+        user_this_post_dislikes = len(PostDisLike.objects.filter(post=disliked_post, user=request.user))
+        if user_this_post_dislikes == 0:
+            dislike = PostDisLike(post=disliked_post, user=request.user)
+            dislike.save()
+            dislike_status = True
+            if user_this_post_likes > 0:
+                PostLike.objects.filter(post=disliked_post, user=request.user).delete()
+        else:
+            dislike_status = False
+    
+        response = {'likes':len(PostLike.objects.filter(post=disliked_post)), 
+                    'dislikes':len(PostDisLike.objects.filter(post=disliked_post)), 
+                    'dislike-status':dislike_status}
+        return JsonResponse(response)

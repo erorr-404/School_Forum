@@ -19,23 +19,28 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, models.CASCADE, default=None)
     author = models.ForeignKey(User, models.CASCADE, default=None)
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
-    #TODO: add many images support
 
     def __str__(self):
         return self.title
 
     def snippet(self):
         return self.body[:50] + '...'
-    
-    def like(self):
-        self.like += 1
-        return True
-    
-    def dislike(self):
-        self.like -= 1
-        return True
+
+
+class PostLike(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, default=None)
+    post = models.ForeignKey(Post, models.CASCADE, default=None)
+
+    def __str__(self):
+        return f'{self.user}: liked {self.post}'
+
+
+class PostDisLike(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, default=None)
+    post = models.ForeignKey(Post, models.CASCADE, default=None)
+
+    def __str__(self):
+        return f'{self.user}: disliked {self.post}'
 
 
 class PostImage(models.Model):
@@ -45,18 +50,18 @@ class PostImage(models.Model):
 
 
 class Comment(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, default=None)
     post = models.ForeignKey(Post, models.CASCADE, default=None)
+    date = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
-    
-    def like(self):
-        self.like += 1
-        return True
-    
-    def dislike(self):
-        self.like -= 1
-        return True
+
+    def __str__(self):
+        return f'{self.user}: post {self.post}'
+
+
+class CommentLike(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, default=None)
+    comment = models.ForeignKey(Comment, models.CASCADE, default=None)
 
 
 class CommentImage(models.Model):
