@@ -1,10 +1,18 @@
 from django.db import models
 
 
-# Create your models here.
+class Category(models.Model):
+    title = models.CharField(max_length=50)
+    slug = models.SlugField()
+    description = models.TextField(max_length=100)
+    date = models.DateTimeField(auto_now_add=True)
+
+
 class Post(models.Model):
     title = models.CharField(max_length=50)
     slug = models.SlugField()
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    # add many images support
+    category = models.ForeignKey(Category, models.CASCADE, default=None)
+    #TODO: add many images support
+
