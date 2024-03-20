@@ -1,0 +1,15 @@
+{% extends 'base_layout.html' %}
+
+
+{% block content %}
+    <div class="profile-container">
+        <p class="username">Username: {{ user.username }}</p>
+        <p class="email">Email: {{ user.email }}</p>
+        <img class="profile-picture" src="{{ profile.image.url }}" alt="user picture">
+        <p class="bio">Bio: {{ user.biography }}</p>
+        <p class="post_number">Posts: {{ user_stats.post_number }}</p>
+        <p class="comment_number">Comments: {{ user_stats.comments_number }}</p>
+        <span class="likes">Likes: {{ user_stats.likes_number }}</span>
+        <span class="likes">Dislikes: {{ user_stats.dislikes_number }}</span>
+    </div>
+{% endblock content %}

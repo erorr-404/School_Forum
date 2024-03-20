@@ -47,6 +47,7 @@ class PostImage(models.Model):
     post = models.ForeignKey(Post, models.CASCADE, default=None)
     image = models.ImageField()
     image_replace_text = models.CharField(max_length=50)
+    user = user = models.ForeignKey(User, models.CASCADE, default=None)
 
 
 class Comment(models.Model):
@@ -64,7 +65,13 @@ class CommentLike(models.Model):
     comment = models.ForeignKey(Comment, models.CASCADE, default=None)
 
 
+class CommentDisLike(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, default=None)
+    comment = models.ForeignKey(Comment, models.CASCADE, default=None)
+
+
 class CommentImage(models.Model):
     comment = models.ForeignKey(Comment, models.CASCADE, default=None)
     image = models.ImageField()
     image_replace_text = models.CharField(max_length=50)
+    user = user = models.ForeignKey(User, models.CASCADE, default=None)

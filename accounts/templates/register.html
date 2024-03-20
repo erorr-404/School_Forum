@@ -3,9 +3,10 @@
 {% block content %}
 
     <h1 class="sign-up-h1">Register</h1>
-    <form class="site-form" actions="{% url 'accounts:register' %}" method="post">
+    <form class="site-form" actions="{% url 'accounts:register' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form}}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
         <input type="submit" value="Register">
     </form>
 {% endblock %}

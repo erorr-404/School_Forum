@@ -232,4 +232,8 @@ a:hover {
     min-width: 500px;
 }
 
+/* profile */
 
+.profile-picture {
+    max-width: 300px;
+}
