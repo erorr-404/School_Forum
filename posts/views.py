@@ -44,7 +44,7 @@ def create_post(request, category):
     return render(request, 'create_post.html', {'form':form, 'category':category})
 
 
-@login_required(login_url='accounts:login')
+@login_required(login_url='accounts:login') # type: ignore
 def like_post(request, category, post):
     if is_ajax(request):
         liked_post = Post.objects.get(slug=post)
@@ -65,7 +65,7 @@ def like_post(request, category, post):
         return JsonResponse(response)
 
 
-@login_required(login_url='accounts:login')
+@login_required(login_url='accounts:login') # type: ignore
 def dislike_post(request, category, post):
     if is_ajax(request):
         disliked_post = Post.objects.get(slug=post)

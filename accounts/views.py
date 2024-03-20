@@ -51,11 +51,11 @@ def edit_profile_view(request):
     return HttpResponse('Edit profile')
 
 
-def profile_view(request, username:str=''):
+def profile_view(request, username=''):
     if username == '':
         user = request.user
     else:
-        user = User.objects.get(username=username)
+        user = User.objects.filter(username=username).first()
     
     profile = Profile.objects.filter(user=user).first()
     user_stats = {
