@@ -2,13 +2,14 @@
 
 
 {% block content %}
-    <h1>Categories list</h1>
+    <h1 class="page-title-header">Categories list</h1>
     <div class="categories">
         {% for category in categories %}
             <div class="category">
                 <a href="{% url 'posts:posts_list' category=category.slug %}">
                     <h2 class="category-title">{{ category.title }}</h2>
                     <p class="category-description">{{ category.description }}</p>
+                    <p class="category-date">{{ category.date }}</p>
                 </a>
             </div>
         {% endfor %}

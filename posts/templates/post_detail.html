@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <h1>Post</h1>
+    <h1 class="page-title-header">Post</h1>
     <div class="post-detail">
         <h2 class="post-detail-title">{{ post.title }}</h2>
         <p class="post-detail-description">{{ post.body }}</p>
@@ -67,7 +67,10 @@
     </div>
     <div class="post-comments">
         <div class="create-comment">
-            
+            <form action="" method="post">
+                <input type="text" name="text" id="crt_com">
+                <input type="submit" value="comment">
+            </form>
         </div>
         <ul class="comments-list">
             {% for comment in comments %}

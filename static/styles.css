@@ -1,19 +1,235 @@
+:root {
+    --color1: #313131;
+    --color2: #414141;
+    --text-hover: #d8d8d8;
+    --text-color: #ffff;
+    --color-important: #245eb6;
+    --color-reject: #FF3F3F;
+    --color-accept: #00CB3F;
+    --default-border-radius: 5px;
+}
+/* basic */
 body {
-    background-color: greenyellow;
+    font-family: "Fira Sans Extra Condensed", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--text-color);
+    background-color: var(--color1);
+    margin: 0px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: var(--text-hover);
+}
+
+/* header */
+
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-important);
+}
+
+.nav-bar h1 {
+    margin: 0 20px;
+}
+
+.nav-bar ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+.nav-bar ul li {
+    margin: 0 10px;
+}
+
+.page-title-header {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.wrapper {
+    align-items: center;
+}
+
+/* categories */
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .category {
-    background-color: deeppink;
+    background-color: var(--color2);
+    margin: 10px 20px;
+    border-radius: var(--default-border-radius);
+    padding: 0 0 5px 0;
+    min-width: 500px;
+}
+
+.category .category-title{
+    border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+    background-color: var(--color-important);
+    padding: 10px;
+}
+
+.category .category-description {
+    margin: 10px;
+    font-size: 16px;
+}
+
+.category .category-date {
+    margin: 10px;
+    font-size: 14px;
+}
+
+/* posts */
+
+.create-post {
+    position: absolute;
+    z-index: 2;
+    top: 61px;
+    right: 22px;
+    background-color: var(--color-accept);
+    padding: 10px;
+    border-radius: var(--default-border-radius);
+}
+
+.page-title-header .posts {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .post {
-    background-color: deeppink;
+    background-color: var(--color2);
+    margin: 10px 20px;
+    border-radius: var(--default-border-radius);
+    padding: 0 0 5px 0;
+    max-width: 750px;
+    min-width: 500px;
+}
+
+.post .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-important);
+    border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+    padding: 10px;
+    height: 12px;
+}
+
+.post .post-content {
+    padding: 10px;
+}
+
+.post .post-title {
+    font-size: 20px;
+    border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+}
+
+.post .post-snippet {
+    margin: 5px 0;
+}
+
+.post-date {
+    margin: 5px 0;
+    font-size: 12px;
+    color: var(--text-hover);
+}
+
+/* post details */
+
+.post-detail {
+    margin: 10px auto;
+    padding: 0 0 1px 0;
+    background-color: #414141;
+    border-radius: var(--default-border-radius);
+    max-width: 750px;
+    min-width: 500px;
+}
+
+.post-detail-title {
+    background-color: var(--color-important);
+    border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+    padding: 0 0 0 10px;
+}
+
+.post-detail-description {
+    margin: 15px;
+}
+
+.post-detail .post-date {
+    margin-left: 15px;
+}
+
+.post-detail .post-author {
+    margin: 15px;
 }
 
 .interactions {
-    background-color: deeppink;
+    margin: 10px auto;
+    padding: 1px 0;
+    border-radius: var(--default-border-radius);
+    background-color: var(--color2);
+    align-items: center;
+    max-width: 750px;
+    min-width: 500px;
+}
+
+.interactions ul {
+    padding: 0 10px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0;
+}
+
+.interactions ul li {
+    font-size: 20px;
+    border-radius: var(--default-border-radius);
+}
+
+#like {
+    background-color: var(--color-accept);
+    border-radius: var(--default-border-radius);
+    padding: 0 5px;
+}
+
+#dislike {
+    background-color: var(--color-reject);
+    border-radius: var(--default-border-radius);
+    padding: 0 5px;
 }
 
 .post-comments {
-    color: blueviolet;
+    margin: auto;
+    border-radius: var(--default-border-radius);
+    background-color: var(--color2);
+    max-width: 750px;
+    min-width: 500px;
 }
+
+
