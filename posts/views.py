@@ -27,7 +27,7 @@ def post_view(request, category, post):
     return render(request, 'post_detail.html', {'post':post, 
                                                 'likes':len(PostLike.objects.filter(post=post)),
                                                 'dislikes':len(PostDisLike.objects.filter(post=post)),
-                                                'comments':Comment.objects.filter(post=post)
+                                                'comments':Comment.objects.filter(post=post)[::-1]
                                                 })
 
 

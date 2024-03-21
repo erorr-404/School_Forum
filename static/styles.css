@@ -31,6 +31,10 @@ a:hover {
     color: var(--text-hover);
 }
 
+.shadow {
+    box-shadow: 1px 1px 20px 1px rgb(30 30 30 / 80%);
+  }
+
 /* header */
 
 .nav-bar {
@@ -99,10 +103,10 @@ a:hover {
 /* posts */
 
 .create-post {
-    position: absolute;
+    position: relative;
     z-index: 2;
-    top: 61px;
-    right: 22px;
+    top: 35px;
+    right: -206px;
     background-color: var(--color-accept);
     padding: 10px;
     border-radius: var(--default-border-radius);
