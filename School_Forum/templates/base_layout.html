@@ -12,50 +12,57 @@
     {% block title %} {% endblock title %}
 </head>
 <body>
-    <div class="wrapper">
-        <nav class="nav-bar shadow">
-            <h1><a href="{% url 'posts:categories' %}">SCHOOL FORUM</a></h1>
-            <ul>
-                
-                {% if user.is_authenticated %}
-                    <li>
-                        <a href="#" id="ajax-logout">Logout</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'accounts:profile' %}">Profile</a>
-                    </li>
-                {% else %}
-                    <li>
-                        <a href="{% url 'accounts:login' %}">Login</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'accounts:register' %}">Register</a>
-                    </li>
-                {% endif %}
-            </ul>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $("#ajax-logout").click(function() {
-                        $.ajax({
-                            type: 'POST',
-                            async: true,
-                            url: '/accounts/ajax-logout/',
-                            data: "param1=value1;",
-                            beforeSend: function(xhr) {
-                                var csrf_token = '{{ csrf_token }}'
-                                xhr.setRequestHeader('X-CSRFToken', csrf_token)
-                            },
-                            success: function(data) {
-                                location.reload();
-                            },
-                            dataType: 'json',
-                        });
+    <nav class="nav-bar shadow">
+        <h1><a href="{% url 'posts:categories' %}">SCHOOL FORUM</a></h1>
+        <ul>
+            
+            {% if user.is_authenticated %}
+                <li>
+                    <a href="#" id="ajax-logout">Logout</a>
+                </li>
+                <li>
+                    <a href="{% url 'accounts:profile' %}">Profile</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url 'accounts:login' %}">Login</a>
+                </li>
+                <li>
+                    <a href="{% url 'accounts:register' %}">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#ajax-logout").click(function() {
+                    $.ajax({
+                        type: 'POST',
+                        async: true,
+                        url: '/accounts/ajax-logout/',
+                        data: "param1=value1;",
+                        beforeSend: function(xhr) {
+                            var csrf_token = '{{ csrf_token }}'
+                            xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                        },
+                        success: function(data) {
+                            location.reload();
+                        },
+                        dataType: 'json',
                     });
                 });
-            </script>
-        </nav>
+            });
+        </script>
+    </nav>
+    <div class="wrapper">
+        
         {% block content %}
         {% endblock content %}
+
     </div>
+    <footer class="footer">
+        <p class="contact-info">
+            Site author: erorr404
+        </p>
+    </footer>
 </body>
 </html>

@@ -2,25 +2,27 @@
 
 
 {% block content %}
-    <div class="page-title-header posts">
-        <a href="{% url 'posts:create' category=category %}" class="create-post shadow">Create post</a>
-        <h1>Posts list</h1>
-    </div>
-    <div class="posts">
-        {% for post in posts %}
-            <div class="post shadow">
-                <a href="{% url 'posts:show' category=category post=post.slug %}">
-                    <div class="title shadow">
-                        <h2 class="post-title">{{ post.title }}</h2>
-                        <p class="post-author">{{ post.author }}</p>
-                    </div>
-                    <div class="post-content">
-                        <p class="post-snippet">{{ post.snippet }}</p>
-                        <p class="post-date">{{ post.date }}</p>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
+    <div class="main-content shadow light-border">
+        <div class="page-title-header posts">
+            <h2>Posts list</h2>
+            <a href="{% url 'posts:create' category=category %}" class="create-post shadow">Create post</a>
+        </div>
+        <div class="posts">
+            {% for post in posts %}
+                <div class="post shadow light-border">
+                    <a href="{% url 'posts:show' category=category post=post.slug %}">
+                        <div class="title shadow">
+                            <h2 class="post-title">{{ post.title }}</h2>
+                            <p class="post-author">{{ post.author }}</p>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-snippet">{{ post.snippet }}</p>
+                            <p class="post-date">{{ post.date }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}
     

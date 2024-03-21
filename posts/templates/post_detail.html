@@ -2,23 +2,29 @@
 
 
 {% block content %}
-    <h1 class="page-title-header">Post</h1>
-    <div class="post-detail shadow">
-        <h2 class="post-detail-title shadow">{{ post.title }}</h2>
-        <p class="post-detail-description">{{ post.body }}</p>
-        <p class="post-date">{{ post.date }}</p>
-        <p class="post-author">{{ post.author }}</p>
-    </div>
-    <div class="interactions shadow">
-        <ul>
-            <li>
-                <a href="#" id="like">Like <var id="likes">{{ likes }}</var></a>
-            </li>
-            <li>
-                <a href="" id="dislike">Dislike <var id="dislikes">{{ dislikes }}</var></a>
-            </li>
-        </ul>
-        <script type="text/javascript">
+    <div class="main-content shadow light-border">
+        <div class="post-detail shadow light-border">
+            <h2 class="post-detail-title shadow">{{ post.title }}</h2>
+            <div class="post-2-columns">
+                <div class="user-post-profile">
+                    {{ post.author }}
+                </div>
+                <div class="post-text-info">
+                    <p class="post-detail-description">{{ post.body }}</p>
+                    <p class="post-date">{{ post.date }}</p>
+                </div>
+            </div>
+            <hr size="1px">
+            <div class="interactions">
+                <ul>
+                    <li>
+                        <a href="#" id="like">Like <var id="likes">{{ likes }}</var></a>
+                    </li>
+                    <li>
+                        <a href="" id="dislike">Dislike <var id="dislikes">{{ dislikes }}</var></a>
+                    </li>
+                </ul>
+                <script type="text/javascript">
             $(document).ready(function () {
                 $("#like").click(function() {
                     $.ajax({
@@ -40,8 +46,8 @@
                     });
                 });
             });
-        </script>
-        <script type="text/javascript">
+                </script>
+                <script type="text/javascript">
             $(document).ready(function () {
                 $("#dislike").click(function() {
                     $.ajax({
@@ -63,13 +69,14 @@
                     });
                 });
             });
-        </script>
-    </div>
-    <div class="post-comments shadow">
-        <div class="create-comment">
-            <input type="text" name="text" id="comment_text" placeholder="Enter your comment">
-            <button id="comment_btn">Create comment</button>
-            <script type="text/javascript">
+                </script>
+            </div>
+        </div>
+        <div class="post-comments shadow">
+            <div class="create-comment">
+                <input type="text" name="text" id="comment_text" placeholder="Enter your comment">
+                <button id="comment_btn">Create comment</button>
+                <script type="text/javascript">
                 $(document).ready(function() {
                     $('#comment_btn').click(function() {
                         var comment_text = $('#comment_text').val()
@@ -91,17 +98,18 @@
                         })
                     })
                 })
-            </script>
+                </script>
+            </div>
+            <ul class="comments-list">
+                {% for comment in comments %}
+                <li>
+                    <p class="comment-author">{{ comment.user }}</p>
+                    <p class="comment-text">{{ comment.text }}</p>
+                    <p class="comment-date">{{ comment.date }}</p>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
-        <ul class="comments-list">
-            {% for comment in comments %}
-            <li>
-                <p class="comment-author">{{ comment.user }}</p>
-                <p class="comment-text">{{ comment.text }}</p>
-                <p class="comment-date">{{ comment.date }}</p>
-            </li>
-            {% endfor %}
-        </ul>
     </div>
 {% endblock content %}
     

@@ -7,6 +7,7 @@ class Category(models.Model):
     slug = models.SlugField()
     description = models.TextField(max_length=100)
     date = models.DateTimeField(auto_now_add=True)
+    thumb = models.ImageField(upload_to='categories_pics/', default='default_category.jpg')
 
     def __str__(self):
         return self.title

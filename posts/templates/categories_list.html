@@ -2,17 +2,24 @@
 
 
 {% block content %}
-    <h1 class="page-title-header">Categories list</h1>
-    <div class="categories">
-        {% for category in categories %}
-            <div class="category shadow">
-                <a href="{% url 'posts:posts_list' category=category.slug %}">
-                    <h2 class="category-title shadow">{{ category.title }}</h2>
-                    <p class="category-description">{{ category.description }}</p>
-                    <p class="category-date">{{ category.date }}</p>
-                </a>
-            </div>
-        {% endfor %}
+    <div class="main-content shadow light-border">
+        <h2 class="page-title-header">Categories list</h2>
+        <div class="categories">
+            {% for category in categories %}
+                <div class="category shadow light-border">
+                    <a href="{% url 'posts:posts_list' category=category.slug %}">
+                        <img class="category-image" src="{{ category.thumb.url }}" alt="category image">
+                        <div class="category-important">
+                            <h2>{{ category.title }}</h2>
+                        </div>
+                        <div class="category-info">
+                            <p class="category-description">{{ category.description }}</p>
+                            <p class="category-date">{{ category.date }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}
     

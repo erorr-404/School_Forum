@@ -6,7 +6,7 @@ from django.db import models
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, models.CASCADE)
-    image = models.ImageField(upload_to='media/profile_pics/', default='default.jpg')
+    image = models.ImageField(upload_to='profile_pics/', default='default.jpg')
     biography = models.TextField(default='')
 
     def __str__(self):
