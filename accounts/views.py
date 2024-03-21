@@ -59,8 +59,10 @@ def profile_view(request, username=''):
     
     profile = Profile.objects.filter(user=user).first()
     user_stats = {
-        'posts_number': Post.objects.filter(author=user),
+        'posts_number': len(Post.objects.filter(author=user)),
+        'last_posts': Post.objects.filter(author=user).order_by('date')[:5],
         'comments_number': len(Comment.objects.filter(user=user)),
+        'last_comments': Comment.objects.filter(user=user).order_by('date')[:5],
         'likes_number': len(PostLike.objects.filter(user=user)) + len(CommentLike.objects.filter(user=user)),
         'dislikes_number': len(PostDisLike.objects.filter(user=user)) + len(CommentDisLike.objects.filter(user=user))}
     return render(request, 'profile.html', {'user':user, 'user_stats':user_stats, 'profile':profile})

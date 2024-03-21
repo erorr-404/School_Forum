@@ -1,9 +1,11 @@
+from cgitb import text
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Category, Post, PostLike, PostDisLike, Comment
 from . import forms
+from django.utils import timezone
 
 
 def is_ajax(request):
@@ -84,3 +86,19 @@ def dislike_post(request, category, post):
                     'dislikes':len(PostDisLike.objects.filter(post=disliked_post)), 
                     'dislike-status':dislike_status}
         return JsonResponse(response)
+
+
+@login_required(login_url='accounts:login') # type: ignore
+def comment_post(request, category, post):
+    if is_ajax(request):
+        comment_text = request.POST.get('text')
+        comment_user = request.user
+        comment_date = timezone.now()
+        comment_post = Post.objects.get(slug=post)
+
+        comment = Comment(user=comment_user, post=comment_post, text=comment_text)
+        comment.save()
+
+        return JsonResponse({'text': comment_text, 
+                             'user_name':comment_user.username, 
+                             'date':comment_date})

@@ -37,7 +37,7 @@ class ProfileImageForm(forms.ModelForm):
     
     class Meta:
         model = Profile
-        fields = ('image',)
+        fields = ('image', 'biography',)
     
     def save(self, user, commit=True):
         profile = super().save(commit=False)  # Save without saving to database yet
@@ -45,6 +45,7 @@ class ProfileImageForm(forms.ModelForm):
         existing_profile = Profile.objects.filter(user=profile.user).first()
         if existing_profile:
             existing_profile.image = profile.image
+            existing_profile.biography = profile.biography
             existing_profile.save()
             return existing_profile
         else:

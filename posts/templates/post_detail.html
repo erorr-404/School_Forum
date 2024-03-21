@@ -67,10 +67,31 @@
     </div>
     <div class="post-comments">
         <div class="create-comment">
-            <form action="" method="post">
-                <input type="text" name="text" id="crt_com">
-                <input type="submit" value="comment">
-            </form>
+            <input type="text" name="text" id="comment_text" placeholder="Enter your comment">
+            <button id="comment_btn">Create comment</button>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#comment_btn').click(function() {
+                        var comment_text = $('#comment_text').val()
+                        $.ajax({
+                            url:'{{ post.slug }}/comment/',
+                            type: 'POST',
+                            data: {'text': comment_text},
+                            beforeSend: function(xhr) {
+                                var csrf_token = '{{ csrf_token }}'
+                                xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                            },
+                            success: function(response) {
+                                comment_li = $('<li>').html(`<p class="comment-author"> ${response.user_name} </p><p class="comment-text"> ${response.text} </p><p class="comment-date"> ${response.date} </p>`)
+                                $('.comments-list').append(comment_li)
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                alert('Error: ' + textStatus + ', ' + errorThrown)
+                            }
+                        })
+                    })
+                })
+            </script>
         </div>
         <ul class="comments-list">
             {% for comment in comments %}
