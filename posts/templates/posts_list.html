@@ -8,16 +8,23 @@
             <a href="{% url 'posts:create' category=category %}" class="create-post shadow">Create post</a>
         </div>
         <div class="posts">
-            {% for post in posts %}
+            {% for post, profile in zipped_list %}
                 <div class="post shadow light-border">
                     <a href="{% url 'posts:show' category=category post=post.slug %}">
                         <div class="title shadow">
                             <h2 class="post-title">{{ post.title }}</h2>
-                            <p class="post-author">{{ post.author }}</p>
+                            <div class="post-user">
+                                <a href="{% url 'accounts:user_profile' username=post.author.username %}" class="user-profile-link">
+                                    <p class="post-author">{{ post.author }}</p>
+                                    <img class="profile-image" src=" {{ profile.image.url }}" alt="profile image">
+                                </a>
+                            </div>
                         </div>
                         <div class="post-content">
-                            <p class="post-snippet">{{ post.snippet }}</p>
-                            <p class="post-date">{{ post.date }}</p>
+                            <a href="{% url 'posts:show' category=category post=post.slug %}">
+                                <p class="post-snippet">{{ post.snippet }}</p>
+                                <p class="post-date">{{ post.date }}</p>
+                            </a>
                         </div>
                     </a>
                 </div>

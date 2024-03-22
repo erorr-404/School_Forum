@@ -206,6 +206,25 @@ footer p {
     min-width: 500px;
 }
 
+.post .user-profile-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+    padding: 0 10px;
+}
+
+.post .user-profile-link:hover {
+    background-color: var(--color-reject);
+    height: 30px;
+}
+
+.post .profile-image {
+    width: 25px;
+    border-radius: 12px;
+    margin-left: 5px;
+}
+
 .post .title {
     display: flex;
     flex-direction: row;

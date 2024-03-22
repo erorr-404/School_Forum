@@ -1,9 +1,10 @@
 from cgitb import text
+from accounts.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Category, Post, PostLike, PostDisLike, Comment
+from .models import *
 from . import forms
 from django.utils import timezone
 
@@ -19,7 +20,12 @@ def categories_list_view(request):
 
 def post_list_view(request, category):
     posts = Post.objects.filter(Q(category__slug=category)).order_by('date')[::-1]
-    return render(request, 'posts_list.html', {'posts':posts, 'category':category})
+    user_profiles = []
+    for post in posts:
+        post_user_profile = Profile.objects.get(user=post.author)
+        user_profiles.append(post_user_profile)
+    zipped_list = zip(posts, user_profiles)
+    return render(request, 'posts_list.html', {'posts':posts, 'category':category, 'profiles':user_profiles, 'zipped_list':zipped_list})
 
 
 def post_view(request, category, post):
