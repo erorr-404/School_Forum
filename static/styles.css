@@ -251,7 +251,7 @@ footer p {
 
 .post-date {
     margin: 5px 0;
-    font-size: 12px;
+    font-size: 14px;
     color: var(--text-hover);
 }
 
@@ -431,6 +431,7 @@ footer p {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin: 0 10px;
 }
 
 .comments-list li:last-child{
@@ -473,6 +474,106 @@ footer p {
 
 /* profile */
 
+.profile-row-1 {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
+.profile-user-image {
+    padding: 10px;
+    margin: 10px;
+    border-radius: var(--default-border-radius);
+    background-color: var(--color3);
+}
+
 .profile-picture {
+    border-radius: var(--default-border-radius);
     max-width: 300px;
+}
+
+.profile-main-description {
+    flex-basis: 70%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: var(--default-border-radius);
+    background-color: var(--color3);
+}
+
+.profile-row-2 {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
+.users-post-list {
+    width: 50%;
+    border-radius: var(--default-border-radius);
+    background-color: var(--color3);
+    margin: 10px;
+    padding: 10px;
+}
+
+.users-post-list div:last-child {
+    border-bottom: none;
+}
+
+.user-post {
+    border-bottom: solid var(--border-light-width) var(--color1);
+}
+
+.user-post .title {
+    background-color: var(--color-important);
+    border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+    padding: 0 0 0 10px;
+}
+
+.profile-post-title {
+    font-style: italic;
+    margin: 10px;
+}
+
+.profile-post-snippet {
+    margin: 10px;
+}
+
+.profile-post-date {
+    margin: 10px;
+    font-size: 14px;
+}
+
+.last-comments {
+    width: 50%;
+    border-radius: var(--default-border-radius);
+    background-color: var(--color3);
+    margin: 10px;
+    padding: 10px;
+}
+
+.last-comments .title {
+    background-color: var(--color-important);
+    border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+    padding: 0 0 0 10px;
+}
+
+.last-comments div:last-child {
+    border-bottom: none;
+}
+
+.last-comment {
+    /* height: 80px; */
+    border-bottom: solid var(--border-light-width) var(--color1);
+}
+
+.last-comment-post-snippet {
+    margin: 10px;
+}
+
+.last-comment-text {
+    margin: 10px;
+}
+
+.last-comment-date {
+    margin: 10px;
+    font-size: 14px;
 }

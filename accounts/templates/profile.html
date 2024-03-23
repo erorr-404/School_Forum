@@ -5,42 +5,37 @@
 {% block content %}
     <div class="main-content shadow light-border" style="width: 70vw;">
         <div class="profile-row-1">
-            <div class="profile-image">
+            <div class="profile-user-image shadow light-border">
                 <img class="profile-picture" src="{{ profile.image.url }}" alt="user picture">
             </div>
-            <div class="profile-main-description">
+            <div class="profile-main-description shadow light-border">
                 <p class="username">Username: {{ user.username }}</p>
-                <p>First name {{ user.first_name }}</p>
-                <p>First name {{ user.last_name }}</p>
+                <p>First name: {{ user.first_name }}</p>
+                <p>First name:{{ user.last_name }}</p>
                 <p class="email">Email: {{ user.email }}</p>
                 <p class="bio">Bio: {{ profile.biography }}</p>
-                <p class="join-date">Join date: {{ user. }}</p>
+                <p class="join-date">Join date: {{ user.date_joined }}</p>
             </div>
         </div>
-        <div class="profile-container">
-            <p class="username">Username: {{ user.username }}</p>
-            <p class="email">Email: {{ user.email }}</p>
-            <img class="profile-picture" src="{{ profile.image.url }}" alt="user picture">
-            <p class="bio">Bio: {{ profile.biography }}</p>
-            <p class="post_number">Posts: {{ user_stats.posts_number }}</p>
-            <p class="comment_number">Comments: {{ user_stats.comments_number }}</p>
-            <span class="likes">Likes: {{ user_stats.likes_number }}</span>
-            <span class="likes">Dislikes: {{ user_stats.dislikes_number }}</span>
-            <div class="last-posts">
-            {% for post in user_stats.last_posts %}
-                <div class="post-detail">
-                    <h2 class="post-detail-title">{{ post.title }}</h2>
-                    <p class="post-detail-description">{{ post.body }}</p>
-                    <p class="post-date">{{ post.date }}</p>
-                    <p class="post-author">{{ post.author }}</p>
-                </div>
-            {% endfor %}
+        <div class="profile-row-2">
+            <div class="users-post-list shadow light-border">
+                <!-- TODO: <div class="title">Posts</div> --> 
+                {% for post in user_stats.last_posts %}
+                    <div class="user-post">
+                        <p class="profile-post-title">{{ post.title }}</p>
+                        <p class="profile-post-snippet">{{ post.snippet }}</p>
+                        <p class="profile-post-date">{{ post.date }}</p>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="last-comments">
+            <div class="last-comments shadow light-border">
+                <!-- TODO: <div class="title">Comments</div> -->
                 {% for comment in user_stats.last_comments %}
-                    <p class="last-comment-post-snippet">{{ comment.post.snippet }}</p>
-                    <p class="last-comment-text">{{ comment.text }}</p>
-                    <p class="last-comment-post-author">{{ comment.post.author }}</p>
+                    <div class="last-comment">
+                        <p class="last-comment-post-snippet">{{ comment.post.snippet }}</p>
+                        <p class="last-comment-text">{{ comment.text }}</p>
+                        <p class="last-comment-date">{{ comment.date }}</p>
+                    </div>
                 {% endfor %}
             </div>
         </div>
