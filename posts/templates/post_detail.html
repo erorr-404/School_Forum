@@ -1,5 +1,6 @@
 {% extends 'base_layout.html' %}
 
+{% block title %} <title> Post details </title> {% endblock title %}
 
 {% block content %}
     <div class="main-content shadow light-border">
@@ -7,21 +8,66 @@
             <h2 class="post-detail-title shadow">{{ post.title }}</h2>
             <div class="post-2-columns">
                 <div class="user-post-profile">
-                    {{ post.author }}
+                    <a class="user-post-profile-link" href="{% url 'accounts:user_profile' username=post.author.username %}">
+                        <img src="{{ author_profile.image.url }}" alt="profile image">
+                        <h3>{{ post.author }}</h3>
+                    </a>
                 </div>
                 <div class="post-text-info">
                     <p class="post-detail-description">{{ post.body }}</p>
                     <p class="post-date">{{ post.date }}</p>
                 </div>
             </div>
-            <hr size="1px">
+            <!-- <hr size="1px" width="95%"> -->
             <div class="interactions">
+                <div class="create-comment">
+                    <button id="comment_btn">Comment</button>
+                    <input type="text" name="text" id="comment_text" placeholder="Enter your comment">
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $('#comment_btn').click(function() {
+                                var comment_text = $('#comment_text').val()
+                                if (comment_text != '' && ' ') {
+                                    $.ajax({
+                                        url:'{{ post.slug }}/comment/',
+                                        type: 'POST',
+                                        data: {'text': comment_text},
+                                        beforeSend: function(xhr) {
+                                            var csrf_token = '{{ csrf_token }}'
+                                            xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                                        },
+                                        success: function(response) {
+                                            comment_li = $('<li>').html(`
+                                                <div class="comment-author-info">
+                                                    <a href="accounts/${response.user_name}" class="user-post-profile-link">
+                                                        <img src="${response.profile_image_url}" alt="post author image" class="comment-prof-image">
+                                                        <h3 class="comment-author">${response.user_name}</h3>
+                                                    </a>
+                                                </div>
+                                                <div class="comment-itself">
+                                                    <p class="post-detail-description">${response.text}</p>
+                                                    <p class="post-date">${response.comment_date}</p>
+                                                </div>`)
+                                            $('.comments-list').prepend(comment_li)
+                                            $('#comment_text').val('')
+                                        },
+                                        error: function(jqXHR, textStatus, errorThrown) {
+                                            alert('Error: ' + textStatus + ', ' + errorThrown)
+                                        }
+                                    })
+                                } else {
+                                    alert('Comment can\'t be empty!')
+                                }
+                            })
+                        })
+                    </script>
+                </div>
                 <ul>
                     <li>
-                        <a href="#" id="like">Like <var id="likes">{{ likes }}</var></a>
+                        <button id="like">▲ {{ likes }}</button>
                     </li>
                     <li>
-                        <a href="" id="dislike">Dislike <var id="dislikes">{{ dislikes }}</var></a>
+                        <button id="dislike">▼ {{ dislikes }}</button>
                     </li>
                 </ul>
                 <script type="text/javascript">
@@ -36,10 +82,19 @@
                             var csrf_token = '{{ csrf_token }}'
                             xhr.setRequestHeader('X-CSRFToken', csrf_token)
                         },
-                        // Remake it
                         success: function(data) {
-                            $('#likes').text(data.likes)
-                            $('#dislikes').text(data.dislikes)
+                            if (data.like_status == true) {
+                                let old_text = $('#like').text().replace('▲ ', '')
+                                let new_text = `▲ ${Number(old_text) + 1}`
+                                $('#like').text(String(new_text))
+                            }
+
+                            if (data.delete_dislike == true) {
+                                let old_text = $('#dislike').text().replace('▼ ', '')
+                                let new_text = `▼ ${Number(old_text) - 1}`
+                                $('#dislike').text(String(new_text))
+                            }
+                            
                             console.log(data)
                         },
                         dataType: 'json',
@@ -59,10 +114,21 @@
                             var csrf_token = '{{ csrf_token }}'
                             xhr.setRequestHeader('X-CSRFToken', csrf_token)
                         },
-                        // Remake it
                         success: function(data) {
-                            $('#dislikes').text(data.dislikes)
-                            $('#likes').text(data.likes)
+                            if (data.dislike_status == true) {
+                                let old_text = $('#dislike').text().replace('▼ ', '')
+                                console.log('OLD:' + old_text)
+                                let new_text = `▼ ${Number(old_text) + 1}`
+                                console.log('NEW:' + new_text)
+                                $('#dislike').text(String(new_text))
+                            }
+                            
+                            if (data.delete_like == true) {
+                                let old_text = $('#like').text().replace('▲ ', '')
+                                let new_text = `▲ ${Number(old_text) - 1}`
+                                $('#like').text(String(new_text))
+                            }
+                            
                             console.log(data)
                         },
                         dataType: 'json',
@@ -73,41 +139,28 @@
             </div>
         </div>
         <div class="post-comments shadow">
-            <div class="create-comment">
-                <input type="text" name="text" id="comment_text" placeholder="Enter your comment">
-                <button id="comment_btn">Create comment</button>
-                <script type="text/javascript">
-                $(document).ready(function() {
-                    $('#comment_btn').click(function() {
-                        var comment_text = $('#comment_text').val()
-                        $.ajax({
-                            url:'{{ post.slug }}/comment/',
-                            type: 'POST',
-                            data: {'text': comment_text},
-                            beforeSend: function(xhr) {
-                                var csrf_token = '{{ csrf_token }}'
-                                xhr.setRequestHeader('X-CSRFToken', csrf_token)
-                            },
-                            success: function(response) {
-                                comment_li = $('<li>').html(`<p class="comment-author"> ${response.user_name} </p><p class="comment-text"> ${response.text} </p><p class="comment-date"> ${response.date} </p>`)
-                                $('.comments-list').append(comment_li)
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                alert('Error: ' + textStatus + ', ' + errorThrown)
-                            }
-                        })
-                    })
-                })
-                </script>
-            </div>
             <ul class="comments-list">
-                {% for comment in comments %}
-                <li>
-                    <p class="comment-author">{{ comment.user }}</p>
-                    <p class="comment-text">{{ comment.text }}</p>
-                    <p class="comment-date">{{ comment.date }}</p>
-                </li>
-                {% endfor %}
+                {% if no_comments == False %}
+                    {% for comment, user_profile in zipped_comments %}
+                    <li>
+                        <div class="comment-author-info">
+                            <a href="{% url 'accounts:user_profile' username=comment.user.username %}" class="user-post-profile-link">
+                                <img src="{{ user_profile.image.url }}" alt="post author image" class="comment-prof-image">
+                                <h3 class="comment-author">{{ comment.user }}</h3>
+                            </a>
+                        </div>
+                        <div class="comment-itself">
+                            <p class="post-detail-description">{{ comment.text }}</p>
+                            <p class="post-date">{{ comment.date }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-comments">
+                        <h2 class="no-comments-big">There is no comments</h2>
+                        <p class="no-comments-small">Create one!</p>
+                    </div>
+                {% endif %}
             </ul>
         </div>
     </div>

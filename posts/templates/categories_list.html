@@ -1,5 +1,6 @@
 {% extends 'base_layout.html' %}
 
+{% block title %} <title> Categories </title> {% endblock title %}
 
 {% block content %}
     <div class="main-content shadow light-border">
@@ -9,7 +10,7 @@
                 <div class="category shadow light-border">
                     <a href="{% url 'posts:posts_list' category=category.slug %}">
                         <img class="category-image" src="{{ category.thumb.url }}" alt="category image">
-                        <div class="category-important">
+                        <div class="category-important shadow">
                             <h2>{{ category.title }}</h2>
                         </div>
                         <div class="category-info">
