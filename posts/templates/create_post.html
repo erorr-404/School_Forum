@@ -3,9 +3,8 @@
 {% block title %} <title> Create post </title> {% endblock title %}
 
 {% block content %}
-    <div class="create-post">
+    <div class="post-creation-form-container shadow light-border">
         <h2>Create New Post</h2>
-
         <form class="site-form" action="{% url 'posts:create' category=category %}" method="post" enctype="multipart/form-data" id="article-create-form">
             {% csrf_token %}
             {{ form }}

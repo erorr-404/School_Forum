@@ -9,9 +9,10 @@
                 <img class="profile-picture" src="{{ profile.image.url }}" alt="user picture">
             </div>
             <div class="profile-main-description shadow light-border">
+                <div class="title">Profile information</div>
                 <p class="username">Username: {{ user.username }}</p>
                 <p>First name: {{ user.first_name }}</p>
-                <p>First name:{{ user.last_name }}</p>
+                <p>First name: {{ user.last_name }}</p>
                 <p class="email">Email: {{ user.email }}</p>
                 <p class="bio">Bio: {{ profile.biography }}</p>
                 <p class="join-date">Join date: {{ user.date_joined }}</p>
@@ -19,24 +20,36 @@
         </div>
         <div class="profile-row-2">
             <div class="users-post-list shadow light-border">
-                <!-- TODO: <div class="title">Posts</div> --> 
-                {% for post in user_stats.last_posts %}
-                    <div class="user-post">
-                        <p class="profile-post-title">{{ post.title }}</p>
-                        <p class="profile-post-snippet">{{ post.snippet }}</p>
-                        <p class="profile-post-date">{{ post.date }}</p>
-                    </div>
-                {% endfor %}
-            </div>
+                <div class="title">Posts of {{ user.username }}</div> 
+                    {% if user_stats.no_posts == False %}
+                        {% for post in user_stats.last_posts %}
+                            <div class="user-post">
+                                <p class="profile-post-title"><a href="{% url 'posts:show' category=post.category post=post.slug %}">{{ post.title }}</a></p>
+                                <p class="profile-post-snippet">{{ post.snippet }}</p>
+                                <p class="profile-post-date">{{ post.date }}</p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-comments">
+                            <p class="no-comments-big">There is no posts</p>
+                        </div>
+                    {% endif %}
+                </div>
             <div class="last-comments shadow light-border">
-                <!-- TODO: <div class="title">Comments</div> -->
-                {% for comment in user_stats.last_comments %}
-                    <div class="last-comment">
-                        <p class="last-comment-post-snippet">{{ comment.post.snippet }}</p>
-                        <p class="last-comment-text">{{ comment.text }}</p>
-                        <p class="last-comment-date">{{ comment.date }}</p>
+                <div class="title">Comments of {{ user.username }}</div>
+                {% if user_stats.no_comments == False %}
+                    {% for comment in user_stats.last_comments %}
+                        <div class="last-comment">
+                            <p class="last-comment-post-snippet">{{ comment.post.snippet }}</p>
+                            <p class="last-comment-text">{{ comment.text }}</p>
+                            <p class="last-comment-date">{{ comment.date }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-comments">
+                        <p class="no-comments-big">There is no comments</p>
                     </div>
-                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

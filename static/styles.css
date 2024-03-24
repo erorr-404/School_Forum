@@ -494,10 +494,22 @@ footer p {
 
 .profile-main-description {
     flex-basis: 70%;
-    padding: 10px;
+    padding: 0 0 10px;
     margin: 10px;
     border-radius: var(--default-border-radius);
     background-color: var(--color3);
+}
+
+.profile-main-description .title {
+    background-color: var(--color-important);
+    border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+    padding: 0 0 0 10px;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.profile-main-description p {
+    margin-left: 10px;
 }
 
 .profile-row-2 {
@@ -511,7 +523,15 @@ footer p {
     border-radius: var(--default-border-radius);
     background-color: var(--color3);
     margin: 10px;
-    padding: 10px;
+    padding: 0 0 10px;
+}
+
+.users-post-list .title {
+    background-color: var(--color-important);
+    border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+    padding: 0 0 0 10px;
+    font-weight: 400;
+    font-size: 18px;
 }
 
 .users-post-list div:last-child {
@@ -520,6 +540,7 @@ footer p {
 
 .user-post {
     border-bottom: solid var(--border-light-width) var(--color1);
+    margin: 0 10px;
 }
 
 .user-post .title {
@@ -547,13 +568,15 @@ footer p {
     border-radius: var(--default-border-radius);
     background-color: var(--color3);
     margin: 10px;
-    padding: 10px;
+    padding: 0 0 10px;
 }
 
 .last-comments .title {
     background-color: var(--color-important);
     border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
     padding: 0 0 0 10px;
+    font-weight: 400;
+    font-size: 18px;
 }
 
 .last-comments div:last-child {
@@ -561,8 +584,8 @@ footer p {
 }
 
 .last-comment {
-    /* height: 80px; */
     border-bottom: solid var(--border-light-width) var(--color1);
+    margin: 0 10px;
 }
 
 .last-comment-post-snippet {
@@ -576,4 +599,16 @@ footer p {
 .last-comment-date {
     margin: 10px;
     font-size: 14px;
+}
+
+/* post creation page */
+
+.post-creation-form-container {
+    margin: 50px;
+    width: 70%;
+    border-radius: var(--default-border-radius);
+    background-color: var(--color2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

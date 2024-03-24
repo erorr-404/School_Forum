@@ -57,12 +57,26 @@ def profile_view(request, username=''):
     else:
         user = User.objects.filter(username=username).first()
     
+    posts_number = len(Post.objects.filter(author=user))
+    if posts_number == 0:
+        no_posts = True
+    else:
+        no_posts = False
+    
+    comments_number = len(Comment.objects.filter(user=user))
+    if comments_number == 0:
+        no_comments = True
+    else:
+        no_comments = False
+
     profile = Profile.objects.filter(user=user).first()
     user_stats = {
-        'posts_number': len(Post.objects.filter(author=user)),
-        'last_posts': Post.objects.filter(author=user).order_by('date')[:5],
-        'comments_number': len(Comment.objects.filter(user=user)),
-        'last_comments': Comment.objects.filter(user=user).order_by('date')[:5],
+        'posts_number': posts_number,
+        'last_posts': Post.objects.filter(author=user).order_by('date')[:5:-1],
+        'no_posts': no_posts,
+        'comments_number': comments_number,
+        'last_comments': Comment.objects.filter(user=user).order_by('date')[:5:-1],
+        'no_comments': no_comments,
         'likes_number': len(PostLike.objects.filter(user=user)) + len(CommentLike.objects.filter(user=user)),
         'dislikes_number': len(PostDisLike.objects.filter(user=user)) + len(CommentDisLike.objects.filter(user=user))}
     return render(request, 'profile.html', {'user':user, 'user_stats':user_stats, 'profile':profile})
