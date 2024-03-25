@@ -21,7 +21,7 @@ class MultipleFileField(forms.FileField):
 
 
 class CreatePost(forms.ModelForm):
-    images = MultipleFileField()
+    images = MultipleFileField(required=False)
     class Meta:
         model = models.Post
         fields = ['title', 'slug', 'body']

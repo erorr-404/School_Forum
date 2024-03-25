@@ -48,6 +48,11 @@ def post_view(request, category, post):
     else:
         no_images = False
     
+    post_views = PostView.objects.filter(post=post)
+    if request.user.is_authenticated:
+        if len(post_views.filter(user=request.user)) == 0:
+            post.add_view(request.user)
+    
     return render(request, 'post_detail.html', {'post': post,
                                                 'author_profile': Profile.objects.get(user=post.author),
                                                 'likes': len(PostLike.objects.filter(post=post)),
@@ -57,6 +62,7 @@ def post_view(request, category, post):
                                                 'no_comments': no_comments,
                                                 'post_images': post_images,
                                                 'no_images': no_images,
+                                                'post_views': len(post_views),
                                                 })
 
 
@@ -71,9 +77,10 @@ def create_post(request, category):
             instance.save()
 
             images = form.cleaned_data['images']
-            for image in images:
-                image_inst = PostImage(post=instance, image=image)
-                image_inst.save()
+            if images != [] or None:
+                for image in images:
+                    image_inst = PostImage(post=instance, image=image)
+                    image_inst.save()
             
             return redirect(f'/{instance.category.slug}')
     else:

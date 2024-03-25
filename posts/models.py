@@ -1,3 +1,4 @@
+from email.policy import default
 from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
@@ -27,6 +28,15 @@ class Post(models.Model):
 
     def snippet(self):
         return self.body[:50] + '...'
+    
+    def add_view(self, user):
+        view = PostView(post=self, user=user)
+        view.save()
+
+
+class PostView(models.Model):
+    post = models.ForeignKey(Post, models.CASCADE, default=None)
+    user = models.ForeignKey(User, models.CASCADE, default=None)
 
 
 class PostLike(models.Model):

@@ -742,3 +742,14 @@ footer p {
 .post-creation-form > input[type=submit]:hover {
     background-color: var(--color-reject);
 }
+
+.post-creation-form:nth-of-type(4) div > input {
+    outline: none;
+    border: none;
+    border-radius: var(--default-border-radius);
+    font-size: 16px;
+    background-color: var(--color-important);
+    color: var(--text-color);
+    margin: 0 10px;
+    font-family: inherit;
+}
