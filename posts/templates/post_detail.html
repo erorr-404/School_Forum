@@ -18,7 +18,13 @@
                     <p class="post-date">{{ post.date }}</p>
                 </div>
             </div>
-            <!-- <hr size="1px" width="95%"> -->
+            {% if no_images == False %}
+                <div class="post-images-container">
+                    {% for post_images in post_images %}
+                        <img class="post-image" src="{{ post_images.image.url }}" alt="post image">
+                    {% endfor %}
+                </div>
+            {% endif %}
             <div class="interactions">
                 <div class="create-comment">
                     <button id="comment_btn">Comment</button>
@@ -71,70 +77,70 @@
                     </li>
                 </ul>
                 <script type="text/javascript">
-            $(document).ready(function () {
-                $("#like").click(function() {
-                    $.ajax({
-                        type: 'POST',
-                        async: true,
-                        url: '{{ post.slug }}/like/',
-                        data: '',
-                        beforeSend: function(xhr) {
-                            var csrf_token = '{{ csrf_token }}'
-                            xhr.setRequestHeader('X-CSRFToken', csrf_token)
-                        },
-                        success: function(data) {
-                            if (data.like_status == true) {
-                                let old_text = $('#like').text().replace('▲ ', '')
-                                let new_text = `▲ ${Number(old_text) + 1}`
-                                $('#like').text(String(new_text))
-                            }
+                    $(document).ready(function () {
+                        $("#like").click(function() {
+                            $.ajax({
+                                type: 'POST',
+                                async: true,
+                                url: '{{ post.slug }}/like/',
+                                data: '',
+                                beforeSend: function(xhr) {
+                                    var csrf_token = '{{ csrf_token }}'
+                                    xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                                },
+                                success: function(data) {
+                                    if (data.like_status == true) {
+                                        let old_text = $('#like').text().replace('▲ ', '')
+                                        let new_text = `▲ ${Number(old_text) + 1}`
+                                        $('#like').text(String(new_text))
+                                    }
+                                
+                                    if (data.delete_dislike == true) {
+                                        let old_text = $('#dislike').text().replace('▼ ', '')
+                                        let new_text = `▼ ${Number(old_text) - 1}`
+                                        $('#dislike').text(String(new_text))
+                                    }
 
-                            if (data.delete_dislike == true) {
-                                let old_text = $('#dislike').text().replace('▼ ', '')
-                                let new_text = `▼ ${Number(old_text) - 1}`
-                                $('#dislike').text(String(new_text))
-                            }
-                            
-                            console.log(data)
-                        },
-                        dataType: 'json',
+                                    console.log(data)
+                                },
+                                dataType: 'json',
+                            });
+                        });
                     });
-                });
-            });
                 </script>
                 <script type="text/javascript">
-            $(document).ready(function () {
-                $("#dislike").click(function() {
-                    $.ajax({
-                        type: 'POST',
-                        async: true,
-                        url: '{{ post.slug }}/dislike/',
-                        data: '',
-                        beforeSend: function(xhr) {
-                            var csrf_token = '{{ csrf_token }}'
-                            xhr.setRequestHeader('X-CSRFToken', csrf_token)
-                        },
-                        success: function(data) {
-                            if (data.dislike_status == true) {
-                                let old_text = $('#dislike').text().replace('▼ ', '')
-                                console.log('OLD:' + old_text)
-                                let new_text = `▼ ${Number(old_text) + 1}`
-                                console.log('NEW:' + new_text)
-                                $('#dislike').text(String(new_text))
-                            }
-                            
-                            if (data.delete_like == true) {
-                                let old_text = $('#like').text().replace('▲ ', '')
-                                let new_text = `▲ ${Number(old_text) - 1}`
-                                $('#like').text(String(new_text))
-                            }
-                            
-                            console.log(data)
-                        },
-                        dataType: 'json',
+                    $(document).ready(function () {
+                        $("#dislike").click(function() {
+                            $.ajax({
+                                type: 'POST',
+                                async: true,
+                                url: '{{ post.slug }}/dislike/',
+                                data: '',
+                                beforeSend: function(xhr) {
+                                    var csrf_token = '{{ csrf_token }}'
+                                    xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                                },
+                                success: function(data) {
+                                    if (data.dislike_status == true) {
+                                        let old_text = $('#dislike').text().replace('▼ ', '')
+                                        console.log('OLD:' + old_text)
+                                        let new_text = `▼ ${Number(old_text) + 1}`
+                                        console.log('NEW:' + new_text)
+                                        $('#dislike').text(String(new_text))
+                                    }
+
+                                    if (data.delete_like == true) {
+                                        let old_text = $('#like').text().replace('▲ ', '')
+                                        let new_text = `▲ ${Number(old_text) - 1}`
+                                        $('#like').text(String(new_text))
+                                    }
+
+                                    console.log(data)
+                                },
+                                dataType: 'json',
+                            });
+                        });
                     });
-                });
-            });
                 </script>
             </div>
         </div>
