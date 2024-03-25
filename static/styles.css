@@ -339,12 +339,49 @@ footer p {
 }
 
 .post-image {
-    height: 50px;
+    height: 65px;
     margin: 10px 10px 10px 0;
 }
 
 .post-image:nth-of-type(1) {
     margin: 10px;
+}
+
+.post-image:hover {
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 320ms ease-in-out;
+    border-radius: 10px;
+    z-index: 10;
+    width: 70%;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#overlay {
+    content: "";
+    background-color: var(--color1);
+    position: fixed;
+    z-index: 10;
+    opacity: 0%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+}
+
+#overlay.active{
+    opacity: 90%;
+    pointer-events: all;
 }
 
 .interactions {

@@ -24,6 +24,67 @@
                         <img class="post-image" src="{{ post_images.image.url }}" alt="post image">
                     {% endfor %}
                 </div>
+                <div id="overlay"></div>
+                <script>
+                    $(document).ready(function() {
+                        var images = $('.post-image')
+                        images.each(function() {
+                            var modal = $('<img>')
+                            modal.attr('src', $(this).attr('src'))
+                            modal.attr('id', `id_${images.index($(this))}`)
+                            modal.addClass('modal')
+                            $('body').append(modal)
+                            $(this).attr('data-modal-target', "#"+modal.attr('id'))
+                        });
+                        $('.modal').each(function() {
+                            $(this).attr('data-modal-close', "#"+$(this).attr('id'))
+                        })
+                        console.log(images);
+                        var modal_triggers = images
+                        console.log(modal_triggers);
+                        var modal_closers = $('.modal')
+                        console.log(modal_closers);
+                        images.each(function() {
+                            $(this).click(function() {
+                                var modal_id = $(this).data('modalTarget')
+                                console.log(modal_id)
+                                var modal = $(modal_id)
+                                console.log(modal);
+                                openModal(modal)
+                            })
+                        })
+                        modal_closers.each(function() {
+                            $(this).click(function() {
+                                var modal_id = $(this).data('modalClose')
+                                console.log(modal_id)
+                                var modal = $(modal_id)
+                                console.log(modal);
+                                closeModal(modal)
+                            })
+                        })
+                        $('#overlay').click(function() {
+                            var modals = $('.modal.active')
+                            modals.each(function() {
+                                closeModal($(this))
+                            })
+                        })
+                        function openModal(modal) {
+                            // alert('Modal triggered')
+                            if (modal != null) {
+                                modal.addClass('active')
+                                $('#overlay').addClass('active')
+                            }
+                        }
+                        function closeModal(modal) {
+                            console.log(modal);
+                            if (modal != null) {
+                                modal.removeClass('active')
+                                $('#overlay').removeClass('active')
+                            }
+                        }
+                    })
+                    
+                </script>
             {% endif %}
             <div class="interactions">
                 <div class="create-comment">
