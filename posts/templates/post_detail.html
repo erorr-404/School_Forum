@@ -39,26 +39,26 @@
                         $('.modal').each(function() {
                             $(this).attr('data-modal-close', "#"+$(this).attr('id'))
                         })
-                        console.log(images);
+                        // console.log(images);
                         var modal_triggers = images
-                        console.log(modal_triggers);
+                        // console.log(modal_triggers);
                         var modal_closers = $('.modal')
-                        console.log(modal_closers);
+                        // console.log(modal_closers);
                         images.each(function() {
                             $(this).click(function() {
                                 var modal_id = $(this).data('modalTarget')
-                                console.log(modal_id)
+                                // console.log(modal_id)
                                 var modal = $(modal_id)
-                                console.log(modal);
+                                // console.log(modal);
                                 openModal(modal)
                             })
                         })
                         modal_closers.each(function() {
                             $(this).click(function() {
                                 var modal_id = $(this).data('modalClose')
-                                console.log(modal_id)
+                                // console.log(modal_id)
                                 var modal = $(modal_id)
-                                console.log(modal);
+                                // console.log(modal);
                                 closeModal(modal)
                             })
                         })
@@ -76,7 +76,7 @@
                             }
                         }
                         function closeModal(modal) {
-                            console.log(modal);
+                            // console.log(modal);
                             if (modal != null) {
                                 modal.removeClass('active')
                                 $('#overlay').removeClass('active')
@@ -115,6 +115,10 @@
                                                     <p class="post-detail-description">${response.text}</p>
                                                     <p class="post-date">${response.comment_date}</p>
                                                 </div>`)
+                                            if ($('.comments-list li').length == 0) {
+                                                console.log($('.comments-list li').length);
+                                                $('.no-comments').remove()
+                                            }
                                             $('.comments-list').prepend(comment_li)
                                             $('#comment_text').val('')
                                         },
