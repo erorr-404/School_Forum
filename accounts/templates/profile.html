@@ -24,7 +24,7 @@
                     {% if user_stats.no_posts == False %}
                         {% for post in user_stats.last_posts %}
                             <div class="user-post">
-                                <p class="profile-post-title"><a href="{% url 'posts:show' category=post.category post=post.slug %}">{{ post.title }}</a></p>
+                                <p class="profile-post-title"><a href="{% url 'posts:show' category=post.category.slug post=post.slug %}">{{ post.title }}</a></p>
                                 <p class="profile-post-snippet">{{ post.snippet }}</p>
                                 <p class="profile-post-date">{{ post.date }}</p>
                             </div>
