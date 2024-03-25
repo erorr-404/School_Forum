@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -10,7 +11,7 @@ class Category(models.Model):
     thumb = models.ImageField(upload_to='categories_pics/', default='default_category.jpg')
 
     def __str__(self):
-        return self.title
+        return f'NAME: {self.title}, SLUG: {self.slug}'
 
 
 class Post(models.Model):
@@ -22,7 +23,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, models.CASCADE, default=None)
 
     def __str__(self):
-        return self.title
+        return f'CATEGORY: {self.category.title}, AUTHOR: {self.author}, TITLE: {self.title}, SLUG: {self.slug}'
 
     def snippet(self):
         return self.body[:50] + '...'
@@ -33,7 +34,7 @@ class PostLike(models.Model):
     post = models.ForeignKey(Post, models.CASCADE, default=None)
 
     def __str__(self):
-        return f'{self.user}: liked {self.post}'
+        return f'USER: {self.user}, POST: {self.post.slug}'
 
 
 class PostDisLike(models.Model):
@@ -41,15 +42,15 @@ class PostDisLike(models.Model):
     post = models.ForeignKey(Post, models.CASCADE, default=None)
 
     def __str__(self):
-        return f'{self.user}: disliked {self.post}'
+        return f'USER: {self.user}, POST: {self.post.slug}'
 
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, models.CASCADE, default=None)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='post_pics/')
 
     def __str__(self):
-        return f'Image of POST: {self.post.title}'
+        return f'POST: {self.post.slug}, IMG: {self.image}'
 
 
 class Comment(models.Model):
@@ -59,7 +60,7 @@ class Comment(models.Model):
     text = models.TextField()
 
     def __str__(self):
-        return f'{self.user}: post {self.post}'
+        return f'USER: {self.user}, POST: {self.post.slug}'
 
 
 class CommentLike(models.Model):

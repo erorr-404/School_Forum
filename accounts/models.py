@@ -10,4 +10,4 @@ class Profile(models.Model):
     biography = models.TextField(default='')
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'USER: {self.user.username}'
