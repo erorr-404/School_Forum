@@ -4,9 +4,27 @@
 
 {% block content %}
     <div class="main-content shadow light-border">
-        <div class="page-title-header posts">
+        <div class="page-title-header posts shadow light-border">
             <h2>Posts list</h2>
-            <a href="{% url 'posts:create' category=category %}" class="create-post shadow">Create post</a>
+            <div class="post-filter-and-create">
+                <input type="search" name="search-post" id="post-search" class="default-text-entry" placeholder="Search">
+                <script>
+                    $(document).ready(function() {
+                        $('#post-search').on('search', function() {
+                            $('.post').each(function() {
+                                if ($(this).find(".post-title").text().trim().toLowerCase().indexOf($('#post-search').val().trim().toLowerCase()) == -1) {
+                                    $(this).hide()
+                                    console.log('Hided');
+                                } else {
+                                    $(this).show()
+                                    console.log('Showed');
+                                }
+                            })
+                        })
+                    })
+                </script>
+                <a href="{% url 'posts:create' category=category %}" class="create-post shadow">Create post</a>
+            </div>
         </div>
         <div class="posts">
             {% for post, profile in zipped_list %}
