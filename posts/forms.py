@@ -24,7 +24,7 @@ class CreatePost(forms.ModelForm):
     images = MultipleFileField(required=False)
     class Meta:
         model = models.Post
-        fields = ['title', 'slug', 'body']
+        fields = ['title', 'body']
 
 
 class CreateComment(forms.ModelForm):

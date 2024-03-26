@@ -254,6 +254,10 @@ footer p {
 .post .post-title {
     font-size: 20px;
     border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
+    white-space: nowrap; 
+    overflow: hidden;
+    width: 375px;
+    text-overflow: ellipsis;
 }
 
 .post .post-snippet {

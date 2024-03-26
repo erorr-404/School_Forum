@@ -14,7 +14,7 @@
                     </a>
                 </div>
                 <div class="post-text-info">
-                    <p class="post-detail-description">{{ post.body }}</p>
+                    <p class="post-detail-description">{{ post.body|safe }}</p>
                     <p class="post-date">{{ post.date }}</p>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                 </div>
                 <ul>
                     <li>
-                        Views: {{ post_views }}
+                        Visitors: {{ post_views }}
                     </li>
                     <li>
                         <button id="like">▲ {{ likes }}</button>

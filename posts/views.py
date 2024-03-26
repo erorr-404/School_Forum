@@ -74,6 +74,8 @@ def create_post(request, category):
             instance = form.save(commit=False)
             instance.author = request.user
             instance.category = Category.objects.get(slug=category)
+            instance.slug = form.cleaned_data['title'].lower().replace(' ', '-').replace('.', '-').replace('--', '-')
+            instance.body = form.cleaned_data['body'].replace('\n', '<br>')
             instance.save()
 
             images = form.cleaned_data['images']
