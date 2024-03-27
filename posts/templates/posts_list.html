@@ -23,10 +23,48 @@
                         })
                     })
                 </script>
+                <label for="filter-post">Sort by:</label>
+                <select name="filter-post" id="post-filter">
+                    <option value="date">Date</option>
+                    <option value="date_reverse">Date (reverse)</option>
+                    <option value="title">Title</option>
+                    <option value="title_reverse">Title (reverse)</option>
+                    <option value="author">Author</option>
+                    <option value="author_reverse">Author (reverse)</option>
+                  </select>
+                  <script>
+                    $(document).ready(function() {
+                        $('#post-filter').change(function() {
+                            var filter = $('#post-filter').val()
+                            var posts = $('#posts')
+                            var postsChildren = posts.children()
+                            switch (filter) {
+                                case 'date':
+                                    posts.css('flex-direction', 'column')
+                                    break;
+                                case 'date_reverse':
+                                    posts.css('flex-direction', 'column-reverse')
+                                    break
+                                case 'title':
+                                    post
+                                    break
+                                case 'title_reverse':
+                                    break
+                                case 'author':
+                                    break
+                                case 'author-reverse':
+                                    break
+                                default:
+                                    posts.css('flex-direction', 'column')
+                                    break;
+                            }
+                        })
+                    })
+                  </script>
                 <a href="{% url 'posts:create' category=category %}" class="create-post shadow">Create post</a>
             </div>
         </div>
-        <div class="posts">
+        <div class="posts" id="posts">
             {% for post, profile in zipped_list %}
                 <div class="post shadow light-border">
                     <a href="{% url 'posts:show' category=category post=post.slug %}">

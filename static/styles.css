@@ -197,7 +197,7 @@ footer p {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 500px;
+    width: 600px;
     background-color: var(--color3);
     border-radius: var(--default-border-radius);
     padding: 1px 10px;
@@ -213,8 +213,25 @@ footer p {
     align-items: center;
 }
 
-#post-search{
-    margin: 0 10px 0 0;
+.post-filter-and-create > * {
+    margin: 0 5px;
+}
+
+label[for='filter-post'] {
+    text-wrap: nowrap;
+}
+
+#post-filter {
+    border-radius: var(--default-border-radius);
+    background-color: var(--color1);
+    outline: none;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: inherit;
+}
+
+#post-filter > option:hover {
+    background-color: var(--color-important);
 }
 
 .create-post {
