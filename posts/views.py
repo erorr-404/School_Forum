@@ -24,8 +24,11 @@ def post_list_view(request, category):
     for post in posts:
         post_user_profile = Profile.objects.get(user=post.author)
         user_profiles.append(post_user_profile)
-    zipped_list = zip(posts, user_profiles)
-    return render(request, 'posts_list.html', {'posts':posts, 'category':category, 'profiles':user_profiles, 'zipped_list':zipped_list})
+    zipped_list = zip(posts, user_profiles, range(0, len(posts)))
+    return render(request, 'posts_list.html', {'posts':posts, 
+                                               'category':category, 
+                                               'profiles':user_profiles, 
+                                               'zipped_list':zipped_list,})
 
 
 def post_view(request, category, post):

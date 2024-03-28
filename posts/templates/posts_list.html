@@ -7,6 +7,7 @@
         <div class="page-title-header posts shadow light-border">
             <h2>Posts list</h2>
             <div class="post-filter-and-create">
+                <label for="post-search">Search:</label>
                 <input type="search" name="search-post" id="post-search" class="default-text-entry" placeholder="Search">
                 <script>
                     $(document).ready(function() {
@@ -23,7 +24,7 @@
                         })
                     })
                 </script>
-                <label for="filter-post">Sort by:</label>
+                <label for="post-filter">Sort by:</label>
                 <select name="filter-post" id="post-filter">
                     <option value="date">Date</option>
                     <option value="date_reverse">Date (reverse)</option>
@@ -34,28 +35,81 @@
                   </select>
                   <script>
                     $(document).ready(function() {
+                        // console.log($('#posts > div').get());
+                        var sort_by_date = function (a, b) {
+                            return Number(a.dataset.postIndex) - Number(b.dataset.postIndex)
+                        }
+                        var sort_by_author = function(a, b) {
+                            aAuthor = a.dataset.postAuthor.toLowerCase()
+                            bAuthor = b.dataset.postAuthor.toLowerCase()
+                            if (aAuthor < bAuthor) return -1
+                            if (aAuthor > bAuthor) return 1
+                            return 0
+                        }
+                        var sort_by_title = function(a, b) {
+                            aTitle = a.dataset.postTitle.toLowerCase()
+                            bTitle = b.dataset.postTitle.toLowerCase()
+                            if (aTitle < bTitle) return -1
+                            if (aTitle > bTitle) return 1
+                            return 0
+                        }
                         $('#post-filter').change(function() {
                             var filter = $('#post-filter').val()
-                            var posts = $('#posts')
-                            var postsChildren = posts.children()
+                            var postsContainer = $('#posts')
+                            var postsChildren = $('#posts > div')
                             switch (filter) {
                                 case 'date':
-                                    posts.css('flex-direction', 'column')
+                                    console.log('date');
+                                    newPosts = postsChildren.get().sort(sort_by_date)
+                                    newPosts.forEach(post => {
+                                        console.log(post);
+                                        postsContainer.append(post)
+                                    });
                                     break;
                                 case 'date_reverse':
-                                    posts.css('flex-direction', 'column-reverse')
+                                    console.log('date_reverse');
+                                    newPosts = postsChildren.get().sort(sort_by_date).reverse()
+                                    newPosts.forEach(post => {
+                                        console.log(post);
+                                        postsContainer.append(post)
+                                    });
                                     break
                                 case 'title':
-                                    post
+                                    newPosts = postsChildren.get().sort(sort_by_title)
+                                    newPosts.forEach(post => {
+                                        console.log(post);
+                                        postsContainer.append(post)
+                                    });
                                     break
                                 case 'title_reverse':
+                                    newPosts = postsChildren.get().sort(sort_by_title).reverse()
+                                    newPosts.forEach(post => {
+                                        console.log(post);
+                                        postsContainer.append(post)
+                                    });
                                     break
                                 case 'author':
+                                    newPosts = postsChildren.get().sort(sort_by_author)
+                                    newPosts.forEach(post => {
+                                        console.log(post);
+                                        postsContainer.append(post)
+                                    });
                                     break
                                 case 'author-reverse':
+                                    newPosts = postsChildren.get().sort(sort_by_author).reverse()
+                                    newPosts.forEach(post => {
+                                        console.log(post);
+                                        postsContainer.append(post)
+                                    });
                                     break
                                 default:
-                                    posts.css('flex-direction', 'column')
+                                    newPosts = postsChildren.get().sort(sort_by_date)
+                                    console.log('default');
+                                    console.log(newPosts);
+                                    newPosts.forEach(post => {
+                                        console.log(post);
+                                        postsContainer.append(post)
+                                    });
                                     break;
                             }
                         })
@@ -65,8 +119,8 @@
             </div>
         </div>
         <div class="posts" id="posts">
-            {% for post, profile in zipped_list %}
-                <div class="post shadow light-border">
+            {% for post, profile, index in zipped_list %}
+                <div class="post shadow light-border" data-post-title="{{ post.title }}" data-post-author="{{ post.author }}" data-post-index="{{ index }}">
                     <a href="{% url 'posts:show' category=category post=post.slug %}">
                         <div class="title shadow">
                             <h2 class="post-title">{{ post.title }}</h2>

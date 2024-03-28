@@ -197,7 +197,7 @@ footer p {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 600px;
+    /* width: 600px; */
     background-color: var(--color3);
     border-radius: var(--default-border-radius);
     padding: 1px 10px;
@@ -205,6 +205,7 @@ footer p {
 
 .page-title-header.posts h2 {
     display: block;
+    margin-right: 30px;
 }
 
 .post-filter-and-create {
@@ -217,7 +218,11 @@ footer p {
     margin: 0 5px;
 }
 
-label[for='filter-post'] {
+label[for='post-search'] {
+    text-wrap: nowrap;
+}
+
+label[for='post-filter'] {
     text-wrap: nowrap;
 }
 
