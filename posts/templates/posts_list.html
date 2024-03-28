@@ -32,10 +32,11 @@
                     <option value="title_reverse">Title (reverse)</option>
                     <option value="author">Author</option>
                     <option value="author_reverse">Author (reverse)</option>
+                    <option value="likes">Likes</option>
+                    <option value="likes_reverse">Likes (reverse)</option>
                   </select>
                   <script>
                     $(document).ready(function() {
-                        // console.log($('#posts > div').get());
                         var sort_by_date = function (a, b) {
                             return Number(a.dataset.postIndex) - Number(b.dataset.postIndex)
                         }
@@ -53,61 +54,66 @@
                             if (aTitle > bTitle) return 1
                             return 0
                         }
+                        var sort_by_likes = function(a, b) {
+                            aLikes = a.dataset.postLikes
+                            bLikes = b.dataset.postLikes
+                            return aLikes - bLikes
+                        }
                         $('#post-filter').change(function() {
                             var filter = $('#post-filter').val()
                             var postsContainer = $('#posts')
                             var postsChildren = $('#posts > div')
                             switch (filter) {
                                 case 'date':
-                                    console.log('date');
                                     newPosts = postsChildren.get().sort(sort_by_date)
                                     newPosts.forEach(post => {
-                                        console.log(post);
                                         postsContainer.append(post)
                                     });
                                     break;
                                 case 'date_reverse':
-                                    console.log('date_reverse');
                                     newPosts = postsChildren.get().sort(sort_by_date).reverse()
                                     newPosts.forEach(post => {
-                                        console.log(post);
                                         postsContainer.append(post)
                                     });
                                     break
                                 case 'title':
                                     newPosts = postsChildren.get().sort(sort_by_title)
                                     newPosts.forEach(post => {
-                                        console.log(post);
                                         postsContainer.append(post)
                                     });
                                     break
                                 case 'title_reverse':
                                     newPosts = postsChildren.get().sort(sort_by_title).reverse()
                                     newPosts.forEach(post => {
-                                        console.log(post);
                                         postsContainer.append(post)
                                     });
                                     break
                                 case 'author':
                                     newPosts = postsChildren.get().sort(sort_by_author)
                                     newPosts.forEach(post => {
-                                        console.log(post);
                                         postsContainer.append(post)
                                     });
                                     break
                                 case 'author-reverse':
                                     newPosts = postsChildren.get().sort(sort_by_author).reverse()
                                     newPosts.forEach(post => {
-                                        console.log(post);
                                         postsContainer.append(post)
                                     });
                                     break
-                                default:
-                                    newPosts = postsChildren.get().sort(sort_by_date)
-                                    console.log('default');
-                                    console.log(newPosts);
+                                case 'likes': 
+                                    newPosts = postsChildren.get().sort(sort_by_likes)
                                     newPosts.forEach(post => {
                                         console.log(post);
+                                        postsContainer.append(post)
+                                    });
+                                case 'likes-reverse':
+                                    newPosts = postsChildren.get().sort(sort_by_likes).reverse()
+                                    newPosts.forEach(post => {
+                                        postsContainer.append(post)
+                                    });
+                                default:
+                                    newPosts = postsChildren.get().sort(sort_by_date)
+                                    newPosts.forEach(post => {
                                         postsContainer.append(post)
                                     });
                                     break;
@@ -119,8 +125,8 @@
             </div>
         </div>
         <div class="posts" id="posts">
-            {% for post, profile, index in zipped_list %}
-                <div class="post shadow light-border" data-post-title="{{ post.title }}" data-post-author="{{ post.author }}" data-post-index="{{ index }}">
+            {% for post, profile, index, likes in zipped_list %}
+                <div class="post shadow light-border" data-post-title="{{ post.title }}" data-post-author="{{ post.author }}" data-post-index="{{ index }}" data-post-likes="{{ likes }}">
                     <a href="{% url 'posts:show' category=category post=post.slug %}">
                         <div class="title shadow">
                             <h2 class="post-title">{{ post.title }}</h2>

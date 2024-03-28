@@ -21,10 +21,12 @@ def categories_list_view(request):
 def post_list_view(request, category):
     posts = Post.objects.filter(Q(category__slug=category)).order_by('date')[::-1]
     user_profiles = []
+    likes = []
     for post in posts:
         post_user_profile = Profile.objects.get(user=post.author)
         user_profiles.append(post_user_profile)
-    zipped_list = zip(posts, user_profiles, range(0, len(posts)))
+        likes.append(len(PostLike.objects.filter(post=post)))
+    zipped_list = zip(posts, user_profiles, range(0, len(posts)), likes)
     return render(request, 'posts_list.html', {'posts':posts, 
                                                'category':category, 
                                                'profiles':user_profiles, 
